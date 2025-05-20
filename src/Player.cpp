@@ -1,5 +1,6 @@
 #include "Player.h"
 #include <iostream>
+#include "Wall.h"
 
 Player::Player(const string &userName) {
     this->userName = userName;
@@ -37,15 +38,28 @@ void Player::handleInput() {
     }
 }
 
-void Player::update(float dt) {
+void Player::update(float dt, const std::vector<Wall>& walls) {
     velocity += acceleration * dt;
     position += velocity * dt;
     velocity *= friction;
     shape.setPosition(position);
 
+    // Collision detection
+    shape.setPosition(position); // move first, then check
+    FloatRect playerBounds = shape.getGlobalBounds();
+
     Vector2f size = shape.getSize();
     float maxX = 800 - size.x;
     float maxY = 600 - size.y;
+
+    for (const Wall& wall : walls) {
+        if (playerBounds.intersects(wall.getShape().getGlobalBounds())) {
+            // Undo movement on collision
+            position -= velocity * dt;
+            velocity = Vector2f(0.f, 0.f);
+            break;
+        }
+    }
 
     if(position.x > maxX){
         position.x = maxX;

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Player.h"
+#include "Wall.h"
+#include <vector>
 
 using namespace std;
 using namespace sf;
@@ -10,14 +12,13 @@ int main(){
     RenderWindow gameWindow(VideoMode(800,600) , "Dash-Runner");
     gameWindow.setFramerateLimit(60);
 
-    //debug
-    // RectangleShape testRect(Vector2f(100.f, 100.f));
-    // testRect.setFillColor(Color::Red);
-    // testRect.setPosition(300.f, 200.f);
-
     Clock dtClock;
 
     Player player1("Brrrp");
+    Wall wall1(Vector2f(200, 300), Vector2f(150, 30));
+    Wall wall2(Vector2f(400, 100), Vector2f(100, 100));
+    vector<Wall> walls = { wall1, wall2 };
+
 
     while(gameWindow.isOpen()){
         Event userEvent;
@@ -31,15 +32,13 @@ int main(){
         float deltaSeconds = dt.asSeconds();
 
         player1.handleInput();
-        player1.update(deltaSeconds);
+        player1.update(deltaSeconds,walls);
 
-        // if(deltaSeconds > 0.f){
-        //     float fps = 1.f / deltaSeconds;
-        //     cout << "FPS: " << fps << endl;
-        // }
+        
         gameWindow.clear();
         player1.draw(gameWindow);
-        // gameWindow.draw(testRect);
+        wall1.draw(gameWindow);
+        wall2.draw(gameWindow);
         gameWindow.display();
     }
 

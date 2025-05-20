@@ -1,5 +1,7 @@
+#pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
+#include "Wall.h"
 
 using namespace std;
 using namespace sf;
@@ -18,6 +20,6 @@ public:
     Player(const string &userName);
     void setUserName(const string &username);
     void handleInput();
-    void update(float dt);
+    void update(float dt , const std::vector<Wall>& walls);
     void draw(RenderWindow &window);
 };
