@@ -42,6 +42,18 @@ void Player::update(float dt) {
     position += velocity * dt;
     velocity *= friction;
     shape.setPosition(position);
+
+    Vector2f size = shape.getSize();
+    float maxX = 800 - size.x;
+    float maxY = 800 - size.y;
+
+    if(position.x > maxX){
+        position.x = maxX;
+    }
+
+    if(position.y > maxY){
+        position.y = maxY;
+    }
 }
 
 void Player::draw(RenderWindow &window) {
