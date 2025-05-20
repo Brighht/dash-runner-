@@ -39,27 +39,32 @@ void Player::handleInput() {
 }
 
 void Player::update(float dt, const std::vector<Wall>& walls) {
-    velocity += acceleration * dt;
-    position += velocity * dt;
-    velocity *= friction;
-    shape.setPosition(position);
+    velocity += acceleration * dt;   // Apply acceleration to velocity
 
-    // Collision detection
-    shape.setPosition(position); // move first, then check
-    FloatRect playerBounds = shape.getGlobalBounds();
+    // Predict next position
+    Vector2f nextPosition = position + velocity * dt;
+
+    // Get the bounding box of where the player "would" move
+    FloatRect nextBounds = shape.getGlobalBounds();
+    nextBounds.left = nextPosition.x;
+    nextBounds.top = nextPosition.y;
+
+    // Check for collision before committing to the move
+    for (const Wall& wall : walls) {
+        if (nextBounds.intersects(wall.getShape().getGlobalBounds())) {
+            velocity = Vector2f(0.f, 0.f); // Stop all motion
+            return; // Don't move this frame
+        }
+    }
+
+    // No collision → apply the movement
+    position = nextPosition;
+    velocity *= friction; // Apply friction
+    shape.setPosition(position);
 
     Vector2f size = shape.getSize();
     float maxX = 800 - size.x;
     float maxY = 600 - size.y;
-
-    for (const Wall& wall : walls) {
-        if (playerBounds.intersects(wall.getShape().getGlobalBounds())) {
-            // Undo movement on collision
-            position -= velocity * dt;
-            velocity = Vector2f(0.f, 0.f);
-            break;
-        }
-    }
 
     if(position.x > maxX){
         position.x = maxX;
