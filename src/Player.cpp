@@ -45,7 +45,7 @@ void Player::update(float dt) {
 
     Vector2f size = shape.getSize();
     float maxX = 800 - size.x;
-    float maxY = 800 - size.y;
+    float maxY = 600 - size.y;
 
     if(position.x > maxX){
         position.x = maxX;
