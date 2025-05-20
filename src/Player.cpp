@@ -51,8 +51,16 @@ void Player::update(float dt) {
         position.x = maxX;
     }
 
+    if(position.x < 0){
+        position.x = 0;
+    }
+
     if(position.y > maxY){
         position.y = maxY;
+    }
+
+    if(position.y < 0){
+        position.y = 0;
     }
 }
 
