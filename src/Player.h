@@ -22,4 +22,5 @@ public:
     void handleInput();
     void update(float dt , const std::vector<Wall>& walls);
     void draw(RenderWindow &window);
+    const RectangleShape& getShape() const;
 };

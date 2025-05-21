@@ -86,3 +86,7 @@ void Player::update(float dt, const std::vector<Wall>& walls) {
 void Player::draw(RenderWindow &window) {
     window.draw(shape);
 }
+
+const RectangleShape& Player::getShape() const {
+    return shape;
+}
