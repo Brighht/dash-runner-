@@ -8,6 +8,11 @@
 using namespace std;
 using namespace sf;
 
+enum class GameState {
+    Playing,
+    GameOver
+};
+
 int main(){
 
     RenderWindow gameWindow(VideoMode(800,600) , "Dash-Runner");
@@ -23,6 +28,20 @@ int main(){
 
     Enemy enemy1(Vector2f(300, 200), 200.f);
 
+    Font font;
+    if(!font.loadFromFile("assets/arial.ttf")){
+        cout << "Failed to load font" << endl;
+    }
+
+    Text gameOverText;
+    gameOverText.setFont(font);
+    gameOverText.setString("GAME OVER\nPress R to Restart or Q to Quit\n");
+    gameOverText.setCharacterSize(40);
+    gameOverText.setFillColor(Color::Red);
+    gameOverText.setPosition(50.f, 50.f);
+
+
+    GameState state = GameState::Playing;
 
     while(gameWindow.isOpen()){
         Event userEvent;
@@ -35,21 +54,43 @@ int main(){
         Time dt = dtClock.restart();
         float deltaSeconds = dt.asSeconds();
 
-        player1.handleInput();
-        player1.update(deltaSeconds,walls);
-        enemy1.update(deltaSeconds);
+        if(state == GameState::Playing){
+            player1.handleInput();
+            enemy1.update(deltaSeconds);
+            player1.update(deltaSeconds,walls);
 
-        if (player1.getShape().getGlobalBounds().intersects(enemy1.getShape().getGlobalBounds())){
-            cout << "GAME OVER: Player touched enemy!" << endl;
-            gameWindow.close();
+            if (player1.getShape().getGlobalBounds().intersects(enemy1.getShape().getGlobalBounds())){
+                cout << "GAME OVER: Player touched enemy!" << endl;
+                state = GameState::GameOver;
+            }
+
         }
 
-        
+        if(state == GameState::GameOver){
+            if(Keyboard::isKeyPressed(Keyboard::R)){
+                //reset game
+                player1 = Player("Bright");
+                enemy1 = Enemy(Vector2f(300, 200), 200.f);
+                state = GameState::Playing;
+            }
+
+            if(Keyboard::isKeyPressed(Keyboard::Q)){
+                gameWindow.close();
+            }
+        }
+
         gameWindow.clear();
-        player1.draw(gameWindow);
-        wall1.draw(gameWindow);
-        wall2.draw(gameWindow);
-        enemy1.draw(gameWindow);
+
+        if(state == GameState::Playing){
+            player1.draw(gameWindow);
+            wall1.draw(gameWindow);
+            wall2.draw(gameWindow);
+            enemy1.draw(gameWindow);
+        }
+        else {
+            gameWindow.draw(gameOverText);
+        }
+        
         gameWindow.display();
     }
 
