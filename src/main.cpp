@@ -4,6 +4,8 @@
 #include "Wall.h"
 #include <vector>
 #include "Enemy.h"
+#include "Collectibles.h"
+
 
 using namespace std;
 using namespace sf;
@@ -27,6 +29,8 @@ int main(){
     vector<Wall> walls = { wall1, wall2 };
 
     Enemy enemy1(Vector2f(300, 200), 200.f);
+
+    Collectibles coin(Vector2f(500.f, 200.f), Vector2f(25.f, 25.f));
 
     Font font;
     if(!font.loadFromFile("assets/arial.ttf")){
@@ -71,6 +75,11 @@ int main(){
 
         }
 
+        if (coin.checkCollision(player1.getShape().getGlobalBounds())) {
+            player1.increaseScore(10);
+        }
+
+
         if(Keyboard::isKeyPressed(Keyboard::Space)){
             player1.increaseScore(1);
         }
@@ -97,6 +106,8 @@ int main(){
             enemy1.draw(gameWindow);
             scoreText.setString("Score: " + std::to_string(player1.getScore()));
             gameWindow.draw(scoreText);
+            coin.draw(gameWindow);
+
 
         }
         else {
