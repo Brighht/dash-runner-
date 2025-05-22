@@ -90,3 +90,11 @@ void Player::draw(RenderWindow &window) {
 const RectangleShape& Player::getShape() const {
     return shape;
 }
+
+void Player::increaseScore(int amount){
+    score += amount;
+}
+
+int Player::getScore() const{
+    return score;
+}

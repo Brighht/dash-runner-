@@ -15,6 +15,8 @@ private:
     Vector2f acceleration;
     float friction;
     float speed;
+    int score = 0;
+
 
 public:
     Player(const string &userName);
@@ -23,4 +25,7 @@ public:
     void update(float dt , const std::vector<Wall>& walls);
     void draw(RenderWindow &window);
     const RectangleShape& getShape() const;
+    void increaseScore(int amount);
+    int getScore() const;
+
 };

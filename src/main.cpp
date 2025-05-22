@@ -36,10 +36,15 @@ int main(){
     Text gameOverText;
     gameOverText.setFont(font);
     gameOverText.setString("GAME OVER\nPress R to Restart or Q to Quit\n");
-    gameOverText.setCharacterSize(40);
+    gameOverText.setCharacterSize(30);
     gameOverText.setFillColor(Color::Red);
     gameOverText.setPosition(50.f, 50.f);
 
+    Text scoreText;
+    scoreText.setFont(font);
+    scoreText.setCharacterSize(24);
+    scoreText.setFillColor(Color::Yellow);
+    scoreText.setPosition(20.f,20.f);
 
     GameState state = GameState::Playing;
 
@@ -66,6 +71,10 @@ int main(){
 
         }
 
+        if(Keyboard::isKeyPressed(Keyboard::Space)){
+            player1.increaseScore(1);
+        }
+
         if(state == GameState::GameOver){
             if(Keyboard::isKeyPressed(Keyboard::R)){
                 //reset game
@@ -86,6 +95,9 @@ int main(){
             wall1.draw(gameWindow);
             wall2.draw(gameWindow);
             enemy1.draw(gameWindow);
+            scoreText.setString("Score: " + std::to_string(player1.getScore()));
+            gameWindow.draw(scoreText);
+
         }
         else {
             gameWindow.draw(gameOverText);
