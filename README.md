@@ -1,8 +1,33 @@
-# dash-runner-
-A small 2D prototype that adds acceleration-based movement, basic collision, and event-driven input.
+# Dash Runner 
 
-## Current Update
-Still Building
+A real-time 2D game prototype built from scratch in C++ using SFML. Features smooth player motion, wall collisions, enemy patrols, collectible scoring, and a game state manager.
+
+## Features
+
+- Real-time physics-based player movement with acceleration and friction
+- Predictive collision system using SFML's `FloatRect`
+- AI-controlled enemy with patrol behavior
+- Score tracking and collectible item system
+- Game Over / Restart state flow using keyboard input
+- Clean object-oriented C++ design (modular classes for player, wall, enemy, collectible)
+
+## Build Instructions
+
+### Requirements
+- C++17 compiler
+- SFML 2.5+
+- CMake
+
+### Build (Linux/MacOS/WSL)
+```bash
+git clone https://github.com/brighht/dash-runner-.git
+cd dash-runner-
+mkdir build
+cd build
+cmake ..
+make
+./dash-runner-
+```
 
 ## Update 1
 https://github.com/user-attachments/assets/4e4ffe06-bf13-4516-88da-669421b6d32a
