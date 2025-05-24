@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+ProjectStructure.MD
+workflow/
+workflow.MD
+
+build/
