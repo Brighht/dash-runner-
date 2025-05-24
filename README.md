@@ -35,3 +35,9 @@ https://github.com/user-attachments/assets/4e4ffe06-bf13-4516-88da-669421b6d32a
 https://github.com/user-attachments/assets/a2e5d50c-c7b0-437d-b2cf-1cbf0eaa27ec
 ## Update 3
 https://github.com/user-attachments/assets/59981695-7c8f-4ef2-b463-28f0a757d4f6
+
+
+## Notes
+- Player, Wall, Enemy, and Collectible are each modular and reusable
+- Game loop is delta-time based for smooth, consistent physics
+- Designed to be extended with levels, sound, or UI polish
